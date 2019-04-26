@@ -9,7 +9,7 @@ head = {}
 sku_id=0
 idsList = []
 
-excel_list = read_excel.read_excel_list('./document/test.xlsx')
+excel_list = read_excel.read_excel_list('../document/test.xlsx')
 length = len(excel_list)
 for i in range(length):
     idsList.append(excel_list[i].pop())
@@ -57,11 +57,12 @@ class Test_sku():
 
 
     @allure.story('添加商品分类')
-    @pytest.mark.parametrize('name',['h1','h2','h3'],ids=['one','two','six'])
-    def test_add_sku(self,name):
-        test_json = {"description": "", "icon": "", "keywords": "", "name": name, "navStatus": 0, "parentId": 0,
+    def test_add_sku(self):
+        test_json = {"description": "", "icon": "", "keywords": "", "name": "周聋", "navStatus": 0, "parentId": 0,
                  "productUnit": "", "showStatus": 0, "sort": 0, "productAttributeIdList": []}
-        add_sku = request.post_request(url=url + '/productCategory/create/', json=test_json, headers=head)
+        add_sku = request.post_request(url=url + '/productCategory/create', json=test_json, headers=head)
         resp_json = add_sku.json()
         assertion.assert_code(add_sku.status_code, 200)
         assertion.assert_in_text(resp_json['message'], '成功')
+
+
